@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="d-flex flex-column p-4 gap-4 py-md-5 mx-lg-5 px-lg-5 align-content-center justify-content-center">
+<form method="post" action="">
+    <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Type Name/Region/Winery/Vineyard here" aria-label="search" aria-describedby="addon-wrapping">
+            <button type="submit" class="btn btn-primary" name="search">Search</button>
+    </div>
+</form>
+  <div class="list-group">
+      {% for wine in wine_list %}
+          {% if wine.wineType == "Red" %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-red" aria-current="true">
+          {% elif wine.wineType == "White" %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-white" aria-current="true">
+          {% elif wine.wineType == "Dessert" %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-dessert" aria-current="true">
+          {% elif wine.wineType == "Sparkling" %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-sparkling" aria-current="true">
+          {% elif wine.wineType == "Rosé" %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-rose" aria-current="true">
+          {% else %}
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+          {% endif %}
+              {% if wine.picture %}
+                  <img src="{{ wine.picture.url }}" alt="wine_pic" class="flex-shrink-0 img">
+              {% else %}
+                  <img src="{{ default_wine_pic }}" alt="wine_pic" class="flex-shrink-0 img">
+              {% endif %}
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                   <h6 class="mb-0">{{ wine }}</h6>
+                    {% if wine.wineType == 'Red' %}
+                        <p style="color:#800020;" class="mb-0">{{ wine.wineType }}</p>
+                    {% elif wine.wineType == 'White' %}
+                        <p style="color:#a69a1e;" class="mb-0">{{ wine.wineType }}</p>
+                    {% elif wine.wineType == 'Dessert' %}
+                        <p style="color:#875d1e;" class="mb-0">{{ wine.wineType }}</p>
+                    {% elif wine.wineType == 'Rosé' %}
+                        <p style="color:#b16363;" class="mb-0">{{ wine.wineType }}</p>
+                    {% elif wine.wineType == 'Sparkling' %}
+                        <p style="color:#7d7151;" class="mb-0">{{ wine.wineType }}</p>
+                    {% else %}
+                        <p class="mb-0">{{ wine.wineType }}</p>
+                    {% endif %}
+                    <p class="mb-0 opacity-75">{{ wine.varietal }}</p>
+                </div>
+                <small class="text-black opacity-50 text-nowrap">0 reviews</small>
+              </div>
+          </a>
+      {% endfor %}
+  </div>
+</div>
+{% endblock %}

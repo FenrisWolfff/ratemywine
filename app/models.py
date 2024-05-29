@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import RegexValidator
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
@@ -18,7 +19,7 @@ class Country(models.Model):
 class Region(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    parentRegion = models.ForeignKey("self", on_delete=models.CASCADE)
+    parentRegion = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -74,42 +75,18 @@ class Wine(models.Model):
     winery = models.ForeignKey(Winery, on_delete=models.CASCADE)
     vineyard = models.CharField(max_length=50, blank=True)
     appellation = models.ForeignKey(Appellation, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='wine', null=True, blank=True)
+    picture = models.ImageField(upload_to='uploads/wine/', null=True, blank=True)
 
     def __str__(self):
-        return ", ".join([self.designation, self.appellation, self.winery, self.varietal, self.vineyard])
-
-
-class UserLogIn(models.Model):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.username
-
-
-class UserInformation(models.Model):
-    phoneMessage = 'Phone number must be entered in the format: 9999999999'
-    phoneRegex = RegexValidator(
-        regex=r'^\d{10}$',
-        message=phoneMessage
-    )
-
-    user = models.ForeignKey(UserLogIn, on_delete=models.CASCADE)
-    firstName = models.CharField(max_length=50)
-    lastName = models.CharField(max_length=50)
-    DoB = models.DateField(blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=10, validators=[phoneRegex], blank=True, null=True)
-
-    def __str__(self):
-        return self.firstName + " " + self.lastName
+        return ", ".join(filter(None, [self.designation, self.appellation.name, self.winery.name,
+                                       self.vineyard]))
 
 
 class Rating(models.Model):
     wine = models.ForeignKey(Wine, on_delete=models.CASCADE)
-    vintage = models.PositiveSmallIntegerField(validators=(MinValueValidator(1900), MaxValueValidator(datetime.date.today().year)))
-    user = models.ForeignKey(UserInformation, on_delete=models.CASCADE)
+    vintage = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1900), MaxValueValidator(datetime.date.today().year)))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     rating = models.PositiveSmallIntegerField(validators=(MinValueValidator(1), MaxValueValidator(10)))
     tannin = models.PositiveSmallIntegerField(validators=(MinValueValidator(1), MaxValueValidator(3)))
