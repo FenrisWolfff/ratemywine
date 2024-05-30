@@ -1,5 +1,113 @@
 {% extends "base.html" %}
 
-{% block content %}
-
+{% block page_background %}
+    <body class="bg-img">
 {% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column px-4 mx-lg-5 px-lg-5 align-content-center justify-content-center opacity-75">
+    <div class="container py-5 bg-dark text-white">
+        <div class="row">
+            <div class="col-12">
+                <h3>Your Review For: WineNameHere</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form method="post" action="" class="bg-dark p-4">
+                    <div class="row mb-5">
+                        <div class="col-6">
+                            <label for="vintage" class="form-label">Vintage</label>
+                            <input type="text" class="form-control" id="vintage" name="vintage">
+                        </div>
+                        <div class="col-6">
+                            <label for="price" class="form-label">Purchase Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" id="price" name="price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                       <div class="col-6">
+                           <label for="rating" class="form-label">Overall Rating </label>
+                           <input type="range" class="form-range  w-75"  value="6" min="1" max="10" id="rating" name="rating"  oninput="document.getElementById('output').value = this.value">
+                           &nbsp&nbsp <output id="output" class="h5">6</output>
+                       </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="sweetness" class="form-label">Sweetness</label>
+                            <select id="sweetness" name="sweetness" class="form-select">
+                              <option value="1"selected>Dry</option>
+                              <option value="2">Off-Dry</option>
+                              <option value="3">Medium-Dry</option>
+                              <option value="4">Medium-Sweet</option>
+                              <option value="5">Sweet</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="tannin" class="form-label">Tannin</label>
+                            <select id="tannin" name="tannin" class="form-select">
+                              <option value="1"selected>Low</option>
+                              <option value="2">Medium</option>
+                              <option value="3">High</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="acidity" class="form-label">Acidity</label>
+                            <select id="acidity" name="acidity" class="form-select">
+                              <option value="1"selected>Low</option>
+                              <option value="2">Medium</option>
+                              <option value="3">High</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="alcohol" class="form-label">Alcohol</label>
+                            <select id="alcohol" name="alcohol" class="form-select">
+                              <option value="1"selected>Low</option>
+                              <option value="2">Medium</option>
+                              <option value="3">High</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-6">
+                            <label for="body" class="form-label">Body</label>
+                            <select id="body" name="body" class="form-select">
+                              <option value="1"selected>Light</option>
+                              <option value="2">Medium</option>
+                              <option value="3">Full</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="finish" class="form-label">Finish</label>
+                            <select id="finish" name="finish" class="form-select">
+                              <option value="1"selected>Short</option>
+                              <option value="2">Medium</option>
+                              <option value="3">Long</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="input-group">
+                              <span class="input-group-text">Review</span>
+                              <textarea class="form-control" name="review" id="review" placeholder="500 characters max." rows="8""></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-outline-light w-100">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
