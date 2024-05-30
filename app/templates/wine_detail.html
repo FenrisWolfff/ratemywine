@@ -95,12 +95,17 @@
                 {% if wine.average_rating %} {{ wine.average_rating }} {% else %} &nbsp&nbsp N/A {% endif %}</h5>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <div class="col-4">
                         <h5>Average Price:</h5>
                     </div>
                     <div class="col-8">
                         <h5 style="font-weight: normal">{% if wine.average_price %}{{ wine.average_price }} {% else %} N/A {% endif %}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <a href='#!' class="btn btn-outline-light w-100">Rate This Wine!</a>
                     </div>
                 </div>
             </div>
