@@ -1,26 +1,81 @@
 {% extends "base.html" %}
 
+{% block page_background %}
+    <body class="bg-img">
+{% endblock %}
 
 {% block content %}
-<div class="d-flex flex-column p-4 gap-4 py-md-5 mx-lg-5 px-lg-5 align-content-center justify-content-center">
-<form method="post" action="">
-    <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Type Name/Region/Winery/Vineyard here" aria-label="search" aria-describedby="addon-wrapping">
-            <button type="submit" class="btn btn-primary" name="search">Search</button>
+<div class="d-flex flex-column px-4 mx-lg-5 px-lg-5 align-content-center justify-content-center opacity-75">
+<form method="post" action="" class="sticky-top2 bg-dark px-4 ">
+    <div class="form-group mb-2 mt-4">
+            <input type="text" class="form-control" placeholder="Type Name/Winery/Vineyard here" aria-label="search" aria-describedby="addon-wrapping">
     </div>
+      <div class="row mb-3">
+    <div class="col-2">
+      <label for="type" class="text-white">Type</label>
+      <select id="type" name="type" class="form-select">
+          <option selected>Choose...</option>
+          <option>White</option>
+          <option>Red</option>
+          <option>Rosé</option>
+          <option>Sparkling</option>
+          <option>Dessert</option>
+          <option>Fortified</option>
+          <option>Other</option>
+      </select>
+    </div>
+    <div class="col-4">
+      <label for="varietal" class="text-white">Varietal</label>
+      <select id="varietal" name="varietal" class="form-select">
+        <option selected>Choose...</option>
+          {% for varietal in varietal_list %}
+              <option>{{ varietal }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="col-6">
+      <label for="appellation" class="text-white">Appellation</label>
+      <select id="appellation" name="appellation" class="form-select">
+        <option selected>Choose...</option>
+        {% for appellation in appellation_list %}
+              <option>{{ appellation }}</option>
+          {% endfor %}
+      </select>
+    </div>
+      </div>
+      <div class="form-check form-check-inline mx-4">
+  <input class="form-check-input" type="radio" name="sorting" id="a-z" value="a-z">
+  <label class="form-check-label text-white" for="a-z"><i class="bi bi-sort-alpha-down h3"></i></label>
+</div>
+<div class="form-check form-check-inline mx-4">
+  <input class="form-check-input" type="radio" name="sorting" id="z-a" value="z-a">
+  <label class="form-check-label text-white" for="z-a"><i class="bi bi-sort-alpha-up h3"></i></label>
+</div>
+<div class="form-check form-check-inline mx-4">
+  <input class="form-check-input" type="radio" name="sorting" id="rating_ascend" value="rating_ascend">
+  <label class="form-check-label text-white" for="rating_ascend">Rating <i class="bi bi-sort-up h3"></i></label>
+</div>
+    <div class="form-check form-check-inline mx-4">
+  <input class="form-check-input" type="radio" name="sorting" id="rating_descend" value="rating_descend">
+  <label class="form-check-label text-white" for="rating_descend">Rating <i class="bi bi-sort-down h3"></i></label>
+</div>
+      <div class="form-group mb-3">
+          <button type="submit" class="btn btn-outline-light">Search</button>
+      </div>
+
 </form>
   <div class="list-group">
       {% for wine in wine_list %}
           {% if wine.wineType == "Red" %}
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-red" aria-current="true">
+              <a href="{% url 'wine_detail' pk=wine.pk %}" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-red" aria-current="true">
           {% elif wine.wineType == "White" %}
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-white" aria-current="true">
+              <a href="{% url 'wine_detail' pk=wine.pk %}" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-white" aria-current="true">
           {% elif wine.wineType == "Dessert" %}
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-dessert" aria-current="true">
+              <a href="{% url 'wine_detail' pk=wine.pk %}" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-dessert" aria-current="true">
           {% elif wine.wineType == "Sparkling" %}
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-sparkling" aria-current="true">
+              <a href="{% url 'wine_detail' pk=wine.pk %}" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-sparkling" aria-current="true">
           {% elif wine.wineType == "Rosé" %}
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-rose" aria-current="true">
+              <a href="{% url 'wine_detail' pk=wine.pk %}" class="list-group-item list-group-item-action d-flex gap-3 py-3 bg-img-rose" aria-current="true">
           {% else %}
               <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
           {% endif %}
@@ -47,7 +102,21 @@
                     {% endif %}
                     <p class="mb-0 opacity-75">{{ wine.varietal }}</p>
                 </div>
-                <small class="text-black opacity-50 text-nowrap">0 reviews</small>
+              {% if wine.num_ratings %}
+                <div class="text-black opacity-75 text-nowrap px-5">{{ wine.num_ratings }} reviews
+              {% else %}
+                  <div class="text-black opacity-50 text-nowrap px-5">0 reviews
+              {% endif %}
+
+              <div class="rating">
+                <i class="bi {% if wine.average_rating < 1 %} bi-star {% elif wine.average_rating == 1 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 3 %} bi-star {% elif wine.average_rating == 3 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 5 %} bi-star {% elif wine.average_rating == 5 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 7 %} bi-star {% elif wine.average_rating == 7 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 9 %} bi-star {% elif wine.average_rating == 9 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+              </div>
+
+                  </div>
               </div>
           </a>
       {% endfor %}

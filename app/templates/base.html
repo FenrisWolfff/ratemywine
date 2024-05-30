@@ -70,11 +70,36 @@
                 background-attachment: local;
                 background-position: right;
             }
+            @supports ((position: -webkit-sticky) or (position: sticky)) {
+                .sticky-top2 {
+                    position: -webkit-sticky;
+                    position: sticky;
+                    top: 56px;
+                    z-index: 1019;
+                }
+            }
+            .img-square {
+                    max-height: 30vw;
+                    max-width: 30vw;
+                    height: auto;
+                    width: 30vw;
+                    object-fit: contain
+                }
+
+            .row{
+  display:flex;
+  align-items:center;
+}
+div.progress{
+  margin:0;
+}
         </style>
     </head>
+    {% block page_background %}
     <body>
+    {% endblock %}
         <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-lg-5">
                 <a class="navbar-brand" href="{% url 'home' %}">RateMyWine</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

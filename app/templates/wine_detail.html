@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block page_background %}
+    <body class="bg-img">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column px-4 mx-lg-5 px-lg-5 align-content-center justify-content-center opacity-75">
+    <div class="container py-5 bg-dark text-white">
+        <div class="row mb-5">
+            <div class="col-12">
+                <h3>{{ wine }}</h3>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-6 text-center">
+                <img src="{% if wine.picture %} {{ wine.picture.url }} {% else %} {{ default_wine_pic }} {% endif %}" class="img-thumbnail img-square">
+            </div>
+            <div class="col-6">
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Type:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.wineType }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Varietal:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.varietal }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Designation:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.designation }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Vineyard:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.vineyard }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Winery:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.winery }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Appellation:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.appellation }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Region:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{% if wine.appellation.region.parentRegion %}{{ wine.appellation.region.parentRegion }}, {% endif %}{{ wine.appellation.region }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Country:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{{ wine.appellation.region.country }}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Member Rating:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">
+                <i class="bi {% if wine.average_rating < 1 %} bi-star {% elif wine.average_rating == 1 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 3 %} bi-star {% elif wine.average_rating == 3 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 5 %} bi-star {% elif wine.average_rating == 5 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 7 %} bi-star {% elif wine.average_rating == 7 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                <i class="bi {% if wine.average_rating < 9 %} bi-star {% elif wine.average_rating == 9 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                {% if wine.average_rating %} {{ wine.average_rating }} {% else %} &nbsp&nbsp N/A {% endif %}</h5>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <h5>Average Price:</h5>
+                    </div>
+                    <div class="col-8">
+                        <h5 style="font-weight: normal">{% if wine.average_price %}{{ wine.average_price }} {% else %} N/A {% endif %}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-secondary">
+                  <div class="card-header">
+                      <div class="row">
+                          <div class="col-8">
+                              <h5 class="card-title">
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-half"></i>
+                                  <i class="bi bi-star"></i>
+                                  <i class="bi bi-star"></i>
+                                  5/10
+                              </h5>
+                          </div>
+                          <div class="col-4 text-end d-flex flex-column justify-content-center">
+                                <h5>$ 32.99</h5>
+                          </div>
+                      </div>
+                  </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Vintage: </b> 2022</li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-2">
+                                    <b>Sweetness: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 0%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    Dry
+                                </div>
+                                <div class="col-2">
+                                    <b>Tannin: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 25%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    Low
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-2">
+                                    <b>Acidity: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 75%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    High
+                                </div>
+                                <div class="col-2">
+                                    <b>Alcohol: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 50%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    Medium
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-2">
+                                    <b>Body: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 25%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    Light
+                                </div>
+                                <div class="col-2">
+                                    <b>Finish: </b>
+                                </div>
+                                <div class="col-3">
+                                    <div class="progress">
+                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 50%; height: 20px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    Medium
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="card-body bg-light text-dark">
+                        <p class="card-text px-5">Woah! This tastes like grape juice. However, this is the most delicious grape juice I've ever tasted. Indulge in the exquisite delight of this exceptional grape juice, where each sip reveals a symphony of flavors that dance upon the palate with unparalleled grace. With its rich aroma and velvety texture, this wine captivates the senses, inviting you on a journey of unparalleled pleasure. From the first taste, notes of ripe fruits tantalize the taste buds, followed by hints of oak and spice that add depth and complexity to its character. Each sip is a celebration of elegance and refinement, leaving a lingering finish that whispers of its undeniable quality. Whether enjoyed on its own or paired with fine cuisine, this wine is a true testament to the artistry and craftsmanship that goes into every bottle, offering a truly unforgettable experience for the discerning palate.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                          <div class="col-8">
+                              Posted By: UserNameHere
+                          </div>
+                          <div class="col-4 text-end d-flex flex-column justify-content-center">
+                                Posted On: 2024-01-01 01:00
+                          </div>
+                      </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

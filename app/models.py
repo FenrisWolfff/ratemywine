@@ -1,6 +1,9 @@
+import random
+
 from django.db import models
 from django.conf import settings
 from django.core.validators import RegexValidator
+from random import randint
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
@@ -81,6 +84,20 @@ class Wine(models.Model):
         return ", ".join(filter(None, [self.designation, self.appellation.name, self.winery.name,
                                        self.vineyard]))
 
+    def num_ratings(self):
+        # TODO: return the number of reviews for each wine - 0 if there's no rating
+
+        return 0
+
+    def average_rating(self):
+        # TODO: return the average rating of each wine - 0 if there's no rating
+
+        return 0
+
+    def average_price(self):
+        # TODO: return the average rating of each wine
+
+        return 0
 
 class Rating(models.Model):
     wine = models.ForeignKey(Wine, on_delete=models.CASCADE)
