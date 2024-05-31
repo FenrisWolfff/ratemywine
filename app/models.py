@@ -98,7 +98,7 @@ class Wine(models.Model):
             return 0
         else:
             return (Rating.objects.filter(wine=self.id)
-                    .aggregate(avgRating=Avg('rating')))
+                    .aggregate(avgRating=Avg('rating')))['avgRating']
 
     def average_price(self):
         # doneTODO: return the average price of each wine
@@ -106,7 +106,7 @@ class Wine(models.Model):
             return 0
         else:
             return (Rating.objects.filter(wine=self.id)
-                    .aggregate(avgPrice=Avg('price')))
+                    .aggregate(avgPrice=Avg('price')))['avgPrice']
 
 
 class Rating(models.Model):
