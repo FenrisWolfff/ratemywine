@@ -7,6 +7,8 @@ from random import randint
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
+from django.db.models import Avg
+
 
 class Country(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -85,19 +87,27 @@ class Wine(models.Model):
                                        self.vineyard]))
 
     def num_ratings(self):
-        # TODO: return the number of reviews for each wine - 0 if there's no rating
-
-        return 0
+        # doneTODO: return the number of reviews for each wine
+        #  - 0 if there's no rating
+        return Rating.objects.filter(wine=self).count()
 
     def average_rating(self):
-        # TODO: return the average rating of each wine - 0 if there's no rating
-
-        return 0
+        # DoneTODO: return the average rating of each wine - 0 if there's no
+        # rating
+        if Rating.objects.filter(wine = self.id).count() == 0:
+            return 0
+        else:
+            return (Rating.objects.filter(wine=self.id)
+                    .aggregate(avgRating=Avg('rating')))
 
     def average_price(self):
-        # TODO: return the average rating of each wine
+        # doneTODO: return the average price of each wine
+        if Rating.objects.filter(wine = self.id).count() == 0:
+            return 0
+        else:
+            return (Rating.objects.filter(wine=self.id)
+                    .aggregate(avgPrice=Avg('price')))
 
-        return 0
 
 class Rating(models.Model):
     wine = models.ForeignKey(Wine, on_delete=models.CASCADE)
