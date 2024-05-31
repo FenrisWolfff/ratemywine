@@ -89,12 +89,12 @@ class Wine(models.Model):
     def num_ratings(self):
         # doneTODO: return the number of reviews for each wine
         #  - 0 if there's no rating
-        return Rating.objects.filter(wine=self).count()
+        return Rating.objects.filter(wine=self.id).count()
 
     def average_rating(self):
         # DoneTODO: return the average rating of each wine - 0 if there's no
         # rating
-        if Rating.objects.filter(wine = self.id).count() == 0:
+        if Rating.objects.filter(wine=self.id).count() == 0:
             return 0
         else:
             return (Rating.objects.filter(wine=self.id)
@@ -102,7 +102,7 @@ class Wine(models.Model):
 
     def average_price(self):
         # doneTODO: return the average price of each wine
-        if Rating.objects.filter(wine = self.id).count() == 0:
+        if Rating.objects.filter(wine=self.id).count() == 0:
             return 0
         else:
             return (Rating.objects.filter(wine=self.id)
