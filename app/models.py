@@ -124,3 +124,92 @@ class Rating(models.Model):
     finish = models.PositiveSmallIntegerField(validators=(MinValueValidator(1), MaxValueValidator(3)))
     price = models.FloatField(validators=(MinValueValidator(0.0),))
     comment = models.TextField(max_length=500, null=True, blank=True)
+
+    def sweetness_words(self):
+        match self.sweetness:
+            case 1:
+                return "Dry"
+            case 2:
+                return "Off-Dry"
+            case 3:
+                return "Medium-Dry"
+            case 4:
+                return "Medium-Sweet"
+            case 5:
+                return "Sweet"
+            case _:
+                return ""
+
+    def sweetness_bar(self):
+        return self.sweetness/5 * 100
+
+    def alcohol_words(self):
+        match self.alcohol:
+            case 1:
+                return "Low"
+            case 2:
+                return "Medium"
+            case 3:
+                return "High"
+            case _:
+                return ""
+
+    def alcohol_bar(self):
+        return self.alcohol/3 * 100
+
+    def tannin_words(self):
+        match self.tannin:
+            case 1:
+                return "Low"
+            case 2:
+                return "Medium"
+            case 3:
+                return "High"
+            case _:
+                return ""
+
+    def tannin_bar(self):
+        return self.tannin/3 * 100
+
+    def acidity_words(self):
+        match self.acidity:
+            case 1:
+                return "Low"
+            case 2:
+                return "Medium"
+            case 3:
+                return "High"
+            case _:
+                return ""
+
+    def acidity_bar(self):
+        return self.acidity/3 * 100
+
+    def body_words(self):
+        match self.body:
+            case 1:
+                return "Light"
+            case 2:
+                return "Medium"
+            case 3:
+                return "Full"
+            case _:
+                return ""
+
+    def body_bar(self):
+        return self.body/3 * 100
+
+    def finish_words(self):
+        match self.finish:
+            case 1:
+                return "Short"
+            case 2:
+                return "Medium"
+            case 3:
+                return "Long"
+            case _:
+                return ""
+
+    def finish_bar(self):
+        return self.finish/3 * 100
+
