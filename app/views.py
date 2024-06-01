@@ -29,7 +29,8 @@ def library(request):
 def wine_detail(request, pk):
     if request.user.is_authenticated:
         # TODO: add all reviews related to this wine to the page with the provided template
-        return render(request, "wine_detail.html", {'wine': Wine.objects.get(pk=pk)})
+        return render(request, "wine_detail.html",
+                      {'wine': Wine.objects.get(pk=pk)})
     else:
         return redirect('login')
 
@@ -41,7 +42,12 @@ def forum(request):
 
             pass
         else:
-            return render(request, "forum.html", {})
+            all_ratings = (Rating.objects.all()
+                           .select_related('wine')
+                           .order_by('timestamp', 'wine__wineType'))
+
+            return render(request, "forum.html",
+                          {"all_ratings": all_ratings})
     else:
         return redirect('login')
 
