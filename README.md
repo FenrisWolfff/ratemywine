@@ -6,7 +6,7 @@
   <li><s>Populate all reviews into the review forum page using the template provided in <code>app/views.py</code> and <code>app/templates/forum.html</code></s> BCE</li>
   <li><s>Populate reviews submitted by current user into the my reviews page using the template provided in <code>app/views.py</code> and <code>app/templates/my_reviews.html</code></s> BCE</li>
   <li>Implement search function in <code>app/views.py</code> for both wine library and review forum  -- Jason </li>
-  <li>Implement filter function in <code>app/views.py</code> for my_reviews</li>
+  <li>Implement filter function in <code>app/views.py</code> for my_reviews -- Jason</li>
 </ul>
 
 Once the above is done:
