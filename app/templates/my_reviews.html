@@ -28,132 +28,156 @@
 </form>
 
     <div class="container pb-5 bg-dark text-white">
-        <div class="row">
-            <div class="col-12">
-                <div class="card bg-secondary">
-                  <div class="card-header">
-                      <div class="row">
-                          <div class="col-8">
-                              <a class="text-white" href="#!"><h5>Wine Name Here</h5></a>
-                              <h5 class="card-title">
-                                  <i class="bi bi-star-fill"></i>
+        {% if my_ratings %}
+            {% for rating in my_ratings %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-secondary">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-8"> <a class="text-white" href="#!">
+                                        <h5> {{ rating.wine }}</h5></a>
+                                        <h5 class="card-title">
+                                            <i class="bi {% if rating.wine.average_rating < 1 %} bi-star {% elif rating.wine.average_rating == 1 %} bi-star-half {% else %}bi-star-fill  {% endif %}"></i>
+                                            <i class="bi {% if rating.wine.average_rating < 3 %} bi-star {% elif rating.wine.average_rating == 3 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                                            <i class="bi {% if rating.wine.average_rating < 5 %} bi-star {% elif rating.wine.average_rating == 5 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                                            <i class="bi {% if rating.wine.average_rating < 7 %} bi-star {% elif rating.wine.average_rating == 7 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                                            <i class="bi {% if rating.wine.average_rating < 9 %} bi-star {% elif rating.wine.average_rating == 9 %} bi-star-half {% else %} bi-star-fill {% endif %}"></i>
+                                            {% comment %}<i class="bi bi-star-fill"></i>
                                   <i class="bi bi-star-fill"></i>
                                   <i class="bi bi-star-half"></i>
                                   <i class="bi bi-star"></i>
-                                  <i class="bi bi-star"></i>
-                                  5/10
-                              </h5>
-                          </div>
-                          <div class="col-4 text-end d-flex flex-column justify-content-center">
-                                <h5>$ 32.99</h5>
-                          </div>
-                      </div>
-                  </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>Vintage: </b> 2022</li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-2">
-                                    <b>Sweetness: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 0%; height: 20px;"></div>
+                                  <i class="bi bi-star"></i>{% endcomment %}
+                                            {{ rating.rating }}/10
+                                        </h5>
                                     </div>
-                                </div>
-                                <div class="col-1">
-                                    Dry
-                                </div>
-                                <div class="col-2">
-                                    <b>Tannin: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 25%; height: 20px;"></div>
+                                    <div class="col-4 text-end d-flex flex-column justify-content-center">
+                                        <h5>${{ rating.wine.average_price|stringformat:'.2f' }} </h5>
                                     </div>
-                                </div>
-                                <div class="col-1">
-                                    Low
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-2">
-                                    <b>Acidity: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 75%; height: 20px;"></div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><b>Vintage: </b>
+                                    {{ rating.vintage }}</li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <b>Sweetness: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.sweetness_bar}}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.sweetness_words }}
+                                        </div>
+                                        <div class="col-2">
+                                            <b>Tannin: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.tannin_bar }}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.tannin_words }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-1">
-                                    High
-                                </div>
-                                <div class="col-2">
-                                    <b>Alcohol: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 50%; height: 20px;"></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <b>Acidity: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.acidity_bar }}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.acidity_words }}
+                                        </div>
+                                        <div class="col-2">
+                                            <b>Alcohol: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.alcohol_bar }}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.alcohol_words }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-1">
-                                    Medium
+                                </li>
+                                <li class="list-group-item">
+
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <b>Body: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.body_bar }}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.body_words }}
+                                        </div>
+                                        <div class="col-2">
+                                            <b>Finish: </b>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress">
+                                                <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: {{ rating.finish_bar }}%; height: 20px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{ rating.finish_words }}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="card-body bg-light text-dark">
+                                <div class="row">
+                                    <div class="col-3 text-center">
+                                        {% if rating.wine.picture %}
+                                            <img class="img-square-sm" src="{{ rating.wine.picture.url }}" alt="wine pic">
+                                            {#                                      <img src="{{ rating.wine.picture.url }}"#}
+                                            {#                                           alt="wine_pic" class="flex-shrink-0 img">#}
+                                            {#                                <img class="img-square-sm" src="{{ default_wine_pic }}" alt="wine pic">#}
+                                        {% else %}
+                                            <img class="img-square-sm" src="{{ default_wine_pic }}" alt="wine pic">
+                                            {#                                      <img src="{{ default_wine_pic }}" alt="wine_pic" class="flex-shrink-0 img">#}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="card-text px-5">
+                                            {{ rating.comment }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-2">
-                                    <b>Body: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 25%; height: 20px;"></div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-8">
+                                        Posted By: {{ rating.user }} {# don't know how to get user name yet #}
+                                    </div>
+                                    <div class="col-4 text-end d-flex flex-column justify-content-center">
+                                        Posted On: {{ rating.timestamp }}
                                     </div>
                                 </div>
-                                <div class="col-1">
-                                    Light
-                                </div>
-                                <div class="col-2">
-                                    <b>Finish: </b>
-                                </div>
-                                <div class="col-3">
-                                    <div class="progress">
-                                      <div class="progress-bar d-flex justify-content-center" role="progressbar" style="width: 50%; height: 20px;"></div>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    Medium
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="card-body bg-light text-dark">
-                        <div class="row">
-                            <div class="col-3 text-center">
-                                <img class="img-square-sm" src="{{ default_wine_pic }}" alt="wine pic">
-                            </div>
-                            <div class="col-9">
-                                <p class="card-text px-5">Woah! This tastes like grape juice. However, this is the most delicious grape juice I've ever tasted. Indulge in the exquisite delight of this exceptional grape juice, where each sip reveals a symphony of flavors that dance upon the palate with unparalleled grace. With its rich aroma and velvety texture, this wine captivates the senses, inviting you on a journey of unparalleled pleasure. From the first taste, notes of ripe fruits tantalize the taste buds, followed by hints of oak and spice that add depth and complexity to its character. Each sip is a celebration of elegance and refinement, leaving a lingering finish that whispers of its undeniable quality. Whether enjoyed on its own or paired with fine cuisine, this wine is a true testament to the artistry and craftsmanship that goes into every bottle, offering a truly unforgettable experience for the discerning palate.</p>
+
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="row">
-                          <div class="col-8">
-                              <a href='#!' class="btn btn-outline-light">Edit Review</a>
-                          </div>
-                          <div class="col-4 text-end d-flex flex-column justify-content-center">
-                                Posted On: 2024-01-01 01:00
-                          </div>
-                      </div>
-
-                    </div>
                 </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <p>No wines have been rated</p>
+        {% endif %}
+
+
     </div>
 
 </div>

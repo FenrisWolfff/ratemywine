@@ -59,7 +59,13 @@ def my_reviews(request):
 
             pass
         else:
-            return render(request, "my_reviews.html", {})
+            # return render(request, "my_reviews.html", {})
+            my_ratings = (Rating.objects.filter(user_id=request.user)
+                          .select_related('wine')
+                          .order_by('timestamp', 'wine__wineType'))
+
+            return render(request, "my_reviews.html",
+                          {"my_ratings": my_ratings})
     else:
         return redirect('login')
 
